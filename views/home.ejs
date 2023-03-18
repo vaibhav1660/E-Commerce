@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>E-commerce Front Page</title>
+	<style>
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: #fff;
+	padding: 20px;
+	box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+	color: #333;
+	margin: 0;
+	font-size: 32px;
+}
+
+section {
+	background-color: #f7f7f7;
+	padding: 40px;
+	text-align: center;
+}
+
+h2 {
+	color: #333;
+	font-size: 24px;
+	margin: 0 0 20px 0;
+}
+
+p {
+	color: #666;
+	font-size: 16px;
+	margin: 0 0 30px 0;
+}
+
+.buttons {
+	display: flex;
+	justify-content: center;
+}
+
+.login-btn, .create-btn {
+	background-color: #2ecc71;
+	color: #fff;
+	border-radius: 5px;
+	padding: 10px 20px;
+	margin-right: 10px;
+	text-decoration: none;
+	font-size: 18px;
+	transition: all 0.3s ease-in-out;
+}
+
+.login-btn:hover, .create-btn:hover {
+	background-color: #27ae60;
+	cursor: pointer;
+}
+    </style>
+</head>
+<body>
+	<header>
+		<h1>E-commerce Store</h1>
+	</header>
+	<section>
+		<h2>Welcome to our store!</h2>
+		<p>Please log in or create a new account to continue.</p>
+		<div class="buttons">
+			<a href="/login" class="login-btn">Login</a>
+			<a href="/createaccount" class="create-btn">Create New Account</a>
+		</div>
+	</section>
+</body>
+</html>

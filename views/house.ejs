@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+<div>
+    <nav class="navbar navbar-expand-lg   bg-dark navbar-dark ">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><h6 style="color:rgb(255, 255, 255)">
+             <%= name %> 
+         </h6></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="/changepassword">Change password</a>
+              <a class="nav-link" href="/cart">My Cart</a>
+              <a class="nav-link" href="/logout">Logout</a>
+              <% if(user.isAdmin===true){ %>
+                <a class="nav-link" href="/Admin">Admin Panel</a>
+             <% } %>
+              
+            </div>
+          </div>
+        </div>
+      </nav>
+
+
+</div>
+
+
+<div class="row" id="productContainer">
+  <% for(let i = 0 ;i < 5 ; i++){ %>
+     <div class="col-md-4">
+        <div class="card" style="width: 18rem;">
+            <img src=<%= product[i].image  %> class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><%= product[i].name   %></h5>
+              <p class="card-text"><%= product[i].price  %></p>
+               <button class="btn btn-primary" data-toggle="modal" data-target="#m<%=product[i].id%>">Details</button> 
+              <a onclick="addtocart(`<%=product[i].id%>`)" class="btn btn-primary">Add to cart</a>
+            </div>
+          </div>
+        </div>
+        <!-- Button trigger modal -->
+        <!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="m<%=product[i].id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <img src=<%= product[i].image  %> class="card-img-top" alt="...">
+          <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <p><%= product[i].details   %></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Buy Now</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+          
+        <% } %>
+</div>
+
+<div>    
+  <center><button class="btn btn-primary" onclick="fetchTheData()">Load more
+     </button></center>
+           </div>
+
+
+           <script>
+            function addtocart(data){
+            let id = parseInt(data);
+            console.log("add to cart is clicked")
+            fetch(`/addtocart/${id}`).then((res)=>{
+            return res.json()
+            }).then((data)=>{
+            console.log(data)
+            })         
+            }
+            </script>
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+     
+      var i = 0;
+      function fetchTheData(){
+        i++;
+        fetch(`http://localhost:3000/sendData?id=${i}`,{method:'get'})
+        .then((response) => response.json()).then((data)=>{
+          console.log(data)
+          createDom(data)
+        })
+      }
+
+      function createDom(data){
+        
+
+        for(let i = 0 ; i  < data.length ; i++){
+          var dom = `   <div class="col-md-4">
+         <div class="card" style="width: 18rem;">
+            <img src=${data[i].image} class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${data[i].name}</h5>
+              <p class="card-text">${data[i].price}</p>
+               <button class="btn btn-primary" data-toggle="modal" data-target="#m${data[i].id}">Details</button> 
+              <a onclick="addtocart(${data[i].id})" class="btn btn-primary">Add to cart</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal fade" id="m${data[i].id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <img src=${data[i].image} class="card-img-top" alt="...">
+          <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <p>${data[i].details}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Buy Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+        
+        `;
+        productContainer.innerHTML += dom;
+        }
+      }
+    </script>
+  </body>
+</html>

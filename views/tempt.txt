@@ -1,0 +1,14 @@
+ <div class="col-sm-12 col-md-5 col-lg-3">
+            <div class="card" style="width: 18rem;">
+                <img src="<%=product.image%>" class=" card-img-top img-fluid" alt="...">
+                <div class="card-body" id="<%=product.id%>" >
+                    <h5 class="card-title"><%=product.name%></h5>
+                    <p class="card-text"><%=product.details%></p>
+                    <p class="card-text quantity "><%=cart[username][product.id].quantity%></p>
+                    <button onclick="increment(`<%=product.id%>`)">+</button>
+
+                    <button onclick="decrement(`<%=product.id%>`)">-</button>
+                    <a href="/delete/<%=product.id%>"  class="btn btn-primary delete ">Delete</a>
+                </div>
+            </div>
+        </div>

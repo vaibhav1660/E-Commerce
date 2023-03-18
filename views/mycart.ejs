@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/eeb8707309.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>cart</title>
+    
+  </head>
+  <script></script>
+
+  <body>
+    <!-- <% if(cart.length <2){ %>
+        <h1>Your Cart is Empty Please add something</h1>
+     <% } %>
+   -->
+   <div>
+    <nav class="navbar navbar-expand-lg   bg-dark navbar-dark ">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><h6 style="color:rgb(255, 255, 255)">
+             <%= username %> 
+         </h6></a>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="/changepassword">Change password</a>
+              <a class="nav-link" href="/home">Home</a>
+              <a class="nav-link" href="/logout">Logout</a>
+              
+            </div>
+          </div>
+        </div>
+      </nav>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+   
+    <div class="d-flex  flex-nowrap " id="productContainer">
+     
+       <%  products.forEach((product)=>{
+            cart.forEach((cartitem)=>{
+                if(cartitem.id==product.id){%>
+                    <div class="col-sm-12 col-md-5 col-lg-3">
+                        <div class="card" style="width: 18rem;">
+                            <img src="<%=product.image%>" class=" card-img-top img-fluid" alt="...">
+                            <div class="card-body" id="<%=product.id%>" >
+                                <h5 class="card-title"><%=product.name%></h5>
+                                <p class="card-text"><%=product.details%></p>
+                                <p class="card-text quantity "><%=cartitem.quantity%></p>
+                                <button onclick="increment(`<%=product.id%>`)">+</button>
+            
+                                <button onclick="decrement(`<%=product.id%>`)">-</button>
+                                <a href="/delete/<%=product.id%>"  class="btn btn-primary delete ">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+           <%     }
+            })
+         })%>
+            
+        </div>
+        <script>
+  if(document.getElementById("productContainer").innerText.length<1){
+        document.getElementById("productContainer").innerHTML="<h1>Your Cart Is EMPTY</h1>"
+       };
+          function increment(id){
+            console.log("increment ke liye poinit hit ho rha hai")
+           fetch(`/cart/increment/${id}`).then((res)=>{
+            return res.json()
+           })
+           .then((data)=>{
+            console.log(data)
+           
+            document.getElementById(`${id}`).querySelector(".quantity").innerText=`${data}`
+           })
+          }
+          function decrement(id){
+
+           fetch(`/cart/decrement/${id}`).then((res)=>{
+            return res.json()
+           })
+           .then((data)=>{
+            console.log(data)
+            if(data<1){
+              document.getElementById(`${id}`).querySelector(".delete").click();
+              
+            }
+            document.getElementById(`${id}`).querySelector(".quantity").innerText=`${data}`
+           })
+          }
+        </script>
+  </body>
+</html>
+ 
